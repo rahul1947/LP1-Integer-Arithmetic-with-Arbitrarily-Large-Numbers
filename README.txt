@@ -18,7 +18,7 @@
 	$java rsn170330.TestLP1 <val>
 	where val can be an Integer = {0, 1, 2, ..., 6}
 
-4. You may use the driver code in main, else you can input you own.
+4. You may use the driver code in main, else you can input on your own.
 
 Note:
  - Have tried to comment every important logic we used while coding the project.
