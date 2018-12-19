@@ -9,8 +9,8 @@
  *
  * Date: Sunday, September 23, 2018
  */
+__________________________________________________________________________________
 
-----------------------------------------------------------------------------------
 # Project Description
    In this project, develop a program that implements arithmetic with large 
    integers, of arbitrary size.
@@ -76,8 +76,8 @@ Some of them are -
    Num squareRoot(Num a): 
       return the square root of a (truncated). Use binary search. Assume that a 
       is non-negative. Return null if b < 0.
+__________________________________________________________________________________
 
-----------------------------------------------------------------------------------
 # Results: 
 
 +--------------------------------------------------------------------------------+
@@ -104,8 +104,8 @@ NOTE:
   
   Existing Processor: Intel® Core™ i5-8250U CPU @ 1.60GHz × 8
   Memory: 7.5 GiB
+__________________________________________________________________________________
 
-----------------------------------------------------------------------------------
 # How to Run:
 
 1. Extract the rsn170330.zip 
