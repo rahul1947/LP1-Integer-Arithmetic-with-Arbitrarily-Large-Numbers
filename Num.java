@@ -22,7 +22,7 @@ public class Num implements Comparable<Num> {
 	// defaultBase: Base in which input and output numbers are evaluated
 	static long defaultBase = 10; 
 	// base: Base responsible for fast calculations. Larger the base, faster the computations.
-	long base = 10000; //NOTE: Keep it in powers of 10 AND 10 <= base <= 10^9
+	long base = 1000000000; //NOTE: Keep it in powers of 10 AND 10 <= base <= 10^9
 	
 	int digits = (int) Math.log10(base()); // base = 10^digits 
 
