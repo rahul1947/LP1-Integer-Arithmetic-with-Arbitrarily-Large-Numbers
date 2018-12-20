@@ -8,6 +8,7 @@ package rsn170330.lp1;
  * @author Simran Rawlani (sxr174130)
  * @author Yash Madane (yxm172130)
  * 
+ * Date: Sunday, September 23, 2018
  */
 
 import java.util.HashSet;
@@ -17,84 +18,103 @@ import java.util.Set;
 import java.util.Map;
 
 public class Num implements Comparable<Num> {
-
-	static long defaultBase = 10; // Change as needed
-	long base = 10000; // Change as needed: Keep it in powers of 10. Else, call Num(long s) only!
 	
-	int digits = (int) Math.log10(base()); // digits = log_10 base: No of 0s in base 10^digits
+	// defaultBase: Base in which input and output numbers are evaluated
+	static long defaultBase = 10; 
+	// base: Base responsible for fast calculations. Larger the base, faster the computations.
+	long base = 10000; //NOTE: Keep it in powers of 10 AND 10 <= base <= 10^9
+	
+	int digits = (int) Math.log10(base()); // base = 10^digits 
 
-	long[] arr; // array to store arbitrarily large integers
-
-	boolean isNegative = false; // boolean flag to represent negative numbers, DEFAULT as false
-
-	int len; // actual number of elements of array that are used
+	// Main attributes of a Num: 
+	private long[] arr; // array to store arbitrarily large integers
+	// boolean flag to represent negative numbers
+	private boolean isNegative;
+	private int len; // actual number of elements of array that are used
 
 	/**
-	 * Converts String s (a number) into Num
+	 * Converts String s (a number) into Num. 
+	 * Initialize isNegative, arr, and len.
 	 * 
 	 * @param s the input string
 	 * @throws NumberFormatException
 	 */
 	public Num(String s) throws NumberFormatException {
+		isNegative = false;
+		
 		/**
 		 * oriStrLen: original string length of s
 		 * trunStrLen: truncated string length after ignoring - sign and leading 0s
 		 * non0: index keeping track of first nonzero character 
 		 * count0: total leading 0s in a string
 		 */
-		int oriStrLen = s.length(), trunStrLen, non0 = 0, count0 = 0;
+		int oriStrLen = s.length();
+		int trunStrLen = oriStrLen, non0 = 0, count0 = 0;
 		
 		String validStr = "[-]([0-9]+)||([0-9]+)"; // RegEx for valid String
 
 		// When invalid string entered
-		if (oriStrLen == 0 || s.isEmpty() || (oriStrLen > 1 && !s.substring(0, 2).matches(validStr))) 
-			throw new NumberFormatException("Entered string is Invalid");
-
+		if (oriStrLen == 0 || s.isEmpty() || 
+				(oriStrLen > 1 && !s.substring(0, 2).matches(validStr))) {
+			throw new NumberFormatException("Invalid String \n");
+		}
 		// Assigning proper Sign
-		this.isNegative = (s.charAt(0) == '-')? true: false;
-
-		// Truncating '- sign' character, if present
-		trunStrLen = (isNegative)? oriStrLen - 1: oriStrLen;
-		if (trunStrLen == oriStrLen - 1) non0 = 1;
+		this.isNegative = (s.charAt(0) == '-')? true : false;
 		
-		// incrementing non0 to keep track of first nonZero element. count0: no of leading zeros in s
-		while (non0 < oriStrLen && s.charAt(non0) == '0') { non0++; count0++; }
+		// Truncating '- sign' character, if present
+		if (isNegative) {
+			trunStrLen = oriStrLen - 1;
+			non0 = 1;
+		}
+		
+		char[] sChar = s.toCharArray();
+		
+		// incrementing non0 to keep track of first nonZero element.
+		while (non0 < oriStrLen && sChar[non0] == '0') { 
+			non0++; 
+			count0++; 
+		}
 		
 		// For -000000000000 to be just 0
-		if (trunStrLen == count0) isNegative = false;
+		if (trunStrLen == count0) 
+			isNegative = false;
 		
 		// Removing leading zeros
-		if (count0 > 0) trunStrLen = trunStrLen - count0;
+		if (count0 > 0) 
+			trunStrLen = trunStrLen - count0;
 		
-		// taking safe side length
+		// trunStrLen cannot be further truncated. So, assign a correct len 
 		this.len = (int) Math.ceil((double) trunStrLen / digits);
-
+		
+		// When s is "0"
 		if (len == 0) {
-			len = 1;
+			len = 1; // still a valid 'digit'
 			arr = new long[1];
-			arr[0] = Long.parseLong(s); // must be a zero
-		} else {
+			arr[0] = Long.parseLong(s);
+		} 
+		else {
 			arr = new long[len];
-			int i = 0;
-			int index;
+			int i = 0, k = 0;
+			int index = oriStrLen - 1;
+			char[] charDigit = new char[digits];
+			String strDigit;
 			
 			// Extracting the numbers out of String
-			for (index = oriStrLen - 1; index > non0 && trunStrLen > digits && i < len; index -= digits) {
-				this.arr[i++] = Long.parseLong(s.substring(index - (digits - 1), index + 1));
-				trunStrLen -= digits;
+			while (non0 <= index && i < len) {
+				
+				k = digits - 1;
+				// Copying chunk of characters of length 'digits' or less
+				while (-1 < k && non0 <= index) {
+					charDigit[k--] = sChar[index--]; 
+				}
+				// if less then remaining characters are padded with '0'
+				while (-1 < k) { charDigit[k--] = '0'; }
+				
+				strDigit = new String(charDigit);
+				// a new digit is added as a long in arr 
+				this.arr[i++] = Long.parseLong(strDigit);
 			}
-			
-			// Last 'digits' from the string
-			if (index > 0) {
-				if (isNegative)
-					arr[i] = Long.parseLong(s.substring(1, index + 1));
-				else
-					arr[i] = Long.parseLong(s.substring(0, index + 1));
-			} else if (index == 0 && !isNegative)
-				arr[i] = Long.parseLong(s.substring(0, 1));
-
 		}
-
 	}
 
 	/**
@@ -104,11 +124,12 @@ public class Num implements Comparable<Num> {
 	 * @param x the number
 	 */
 	public Num(long x) {
+		isNegative = false;
 
 		// When x is Negative, making it positive with flag isNegative as true
 		if (x < 0) {
 			this.isNegative = true;
-			x = x * -1;
+			x = -1 * x;
 		}
 		double lengthArr = 0;
 
@@ -1303,12 +1324,17 @@ public class Num implements Comparable<Num> {
 		System.out.println(z.base);
 		System.out.println(z);
 		
-		String[] strIn = {"2","+","3","*","(","4","*","5","+","3",")","^","2","-","1"};
+		//String[] strIn = {"2","+","3","*","(","4","*","5","+","3",")","^","2","-","1"};
 		//String[] strIn = {"(","-45","/","9",")","^","(","31","%","4",")","-","(","12","*","(","2","+","2","^","3",")",")"};
-		//String[] strIn = {"(","-590",")","*","8","/","25"};
+		String[] strIn = {"(", "(", "98765432109876543210987654321", "+", "5432109876543210987654321", "*", "345678901234567890123456789012", ")", "*", "246801357924680135792468013579", "+", "12345678910111213141516171819202122", "*", "(", "191817161514131211109876543210", "-", "13579", "*", "24680", ")", ")", "*", "7896543", "+", "157984320"};
+		
+		//String[] strIn = {"(", "(", "9", "+", "5", "*", "3", ")", "*", "2", "+", "1", "*", "(", "1", "-", "1", "*", "2", ")", ")", "*", "7", "+", "1"};
+				
 		
 		//String str[] = {"9","^","4","-","8","^","9","%","100","+","(","-590",")","*","8","/","25","-","(","9","/","10","/","10","/","10",")"};
-		System.out.println("Infix evaluation: \t"+Num.evaluateInfix(strIn));
+		Num inFix = Num.evaluateInfix(strIn);
+		System.out.println("Infix evaluation: \t"+ inFix);
+		inFix.printList();
 		
 		//String[] strPost = {"63","53","-","10","+" };
 		//String[] strPost = {"9","5","3","*","+","2","*","1","8","6","4","*","-","*","+","7","*","1","+"};
