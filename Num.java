@@ -1170,10 +1170,8 @@ public class Num implements Comparable<Num> {
 					opt = operator.pop();
 					operand.push(out.evaluate(n1, n2, opt).toString());
 				}
-				
 				operator.pop();
 			} 
-			
 			else {
 				// When operator stack is empty, i.e nothing remains to evaluate -> push(operator)
 				if (operator.isEmpty()) 
@@ -1334,4 +1332,9 @@ public class Num implements Comparable<Num> {
 		//test.printList();
 		//System.out.println(test.convertBase(9223));
 	}
+	/**
+	 * TODO:
+	 * 1. Create a function with if else ... blocks returning appropriate precedence for an operator. Instead of using HashMap. 
+	 * 2. Write Tester file with the help from Yash with test cases for each operations/ methods.
+	 */
 }
