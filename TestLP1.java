@@ -13,7 +13,7 @@ package rsn170330.lp1;
 
 public class TestLP1 {
 	public static void main(String[] args) throws Exception {
-		int val = 4;
+		int val = 1;
 		if (args.length > 0) {
 			val = Integer.parseInt(args[0]);
 		}
@@ -31,18 +31,20 @@ public class TestLP1 {
 			print("1912991252611125159670459142926165956543555293", Num.squareRoot(x)); 
 			
 			System.out.println("3659535532566681673026857047264590495633096120170316011130546064934049533282760410899967541 in base 1000:");
-			System.out.println("Expected output:");
+			System.out.println("Expected output: ");
 			System.out.println("1000: [541, 967, 899, 410, 760, 282, 533, 49, 934, 64, 546, 130, 11, 316, 170, 120, 96, 633, 495, 590, 264, 47, 857, 26, 673, 681, 566, 532, 535, 659, 3]");
-			System.out.println("Program output:");
+			System.out.println("Program output: ");
 			x.convertBase(1000).printList();
+			System.out.println("The Number.toString(): " + x);
 			System.out.println();
 			
 			System.out.println();
 			System.out.println("3659535532566681673026857047264590495633096120170316011130546064934049533282760410899967541 in base 87654321:");
-			System.out.println("Expected output:");
+			System.out.println("Expected output: ");
 			System.out.println("87654321: [22061598, 62391617, 19111561, 28159858, 28355320, 18044843, 39952418, 23667669, 1841756, 82528285, 23042337, 1559]");
-			System.out.println("Program output:");
+			System.out.println("Program output: ");
 			x.convertBase(87654321).printList();
+			System.out.println("The Number.toString(): " + x);
 			System.out.println();
 			
 			break;

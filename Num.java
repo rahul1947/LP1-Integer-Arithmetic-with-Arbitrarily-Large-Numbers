@@ -33,18 +33,15 @@ public class Num implements Comparable<Num> {
 	private int len; // actual number of elements of array that are used
 
 	/**
-	 * Converts String s (a number) into Num. 
-	 * Initialize isNegative, arr, and len.
-	 * 
+	 * Converts String s (a number) into Num. Initialize isNegative, arr, and len.
 	 * @param s the input string
 	 * @throws NumberFormatException
 	 */
 	public Num(String s) throws NumberFormatException {
 		isNegative = false;
-		
 		/**
 		 * oriStrLen: original string length of s
-		 * trunStrLen: truncated string length after ignoring - sign and leading 0s
+		 * trunStrLen: truncated string length after ignoring '-' sign and leading 0s
 		 * non0: index keeping track of first nonzero character 
 		 * count0: total leading 0s in a string
 		 */
@@ -120,7 +117,6 @@ public class Num implements Comparable<Num> {
 	/**
 	 * Reads the number x (in defaultBase), to create Num in base = this.base
 	 * storing all it's digits long[] arr with least significant at arr[0] and so on.
-	 * 
 	 * @param x the number
 	 */
 	public Num(long x) {
@@ -137,7 +133,6 @@ public class Num implements Comparable<Num> {
 		if (x == 0) {
 			lengthArr = 1;
 		}
-
 		// No of digits in this.Num = log_base (x) + 1 = log(x)/log(base) + 1
 		else {
 			lengthArr = ((Math.log((double) x)) / (Math.log((double) base))) + 1;
@@ -160,8 +155,8 @@ public class Num implements Comparable<Num> {
 	}
 
 	/**
-	 * Adds two large numbers of the equal base to give the sum in the same base.
-	 * 
+	 * Addition of two numbers Num a and Num b.
+	 * Precondition: a and b must be in the same base.
 	 * @param a the large number
 	 * @param b the large number
 	 * @return the large sum of a and b
@@ -194,8 +189,8 @@ public class Num implements Comparable<Num> {
 	}
 
 	/**
-	 * Adds two positive large numbers of the equal base to give the sum.
-	 * 
+	 * Unsigned addition of two numbers Num a and Num b.
+	 * Precondition: a and b must be in the same base.
 	 * @param a the large number
 	 * @param b the large number
 	 * @return the large sum of a and b
@@ -260,7 +255,6 @@ public class Num implements Comparable<Num> {
 	/**
 	 * Trimming unnecessary leading zeros from x.
 	 * Keeping sign intact, updates 'a.len' and 'a.arr' from x
-	 * 
 	 * @param x the input number
 	 * @return the trimmed number a
 	 */
@@ -289,8 +283,8 @@ public class Num implements Comparable<Num> {
 	}
 
 	/**
-	 * Subtract Num b from Num a to give a Num out
-	 * 
+	 * Subtraction of Num b from Num a.
+	 * NOTE: Left associativity is maintained.
 	 * @param a the input number
 	 * @param b the input number
 	 * @return the difference
@@ -323,7 +317,8 @@ public class Num implements Comparable<Num> {
 	}
 	
 	/**
-	 * Gives non-negative difference of x, y. NOTE: x >= y
+	 * Difference of two numbers ignoring the sign.  
+	 * Precondition: x >= y
 	 * @param x the greater number
 	 * @param y the smaller number
 	 * @return the difference
@@ -399,7 +394,7 @@ public class Num implements Comparable<Num> {
 	}
 	
 	/**
-	 * Returns Num as product of Num a and Num b.
+	 * Returns Num as a product of Num a and Num b.
 	 * @param a first number
 	 * @param b second number
 	 * @return the product of numbers a and b
@@ -534,7 +529,8 @@ public class Num implements Comparable<Num> {
 
 	/**
 	 * Karatsuba Algorithm Helper method: 
-	 * Fragments a to a1 and a2, and b to b1 and b2. a and b are of same length n.
+	 * Fragments a to a1 and a2, and b to b1 and b2. 
+	 * Precondition: a and b are of same length n.
 	 * @param a the first number
 	 * @param a1 the higher significant half (length = n - n/2)
 	 * @param a2 the lower significant half (length = n/2)
@@ -566,7 +562,6 @@ public class Num implements Comparable<Num> {
 	/**
 	 * Pad 'zeros' no of zeros in front of Num a, and 
 	 * updating the length return new paddedNum
-	 * 
 	 * @param a the Number required padding
 	 * @param zeros is the no of zeros to be padded
 	 * @return the padded number
@@ -595,7 +590,6 @@ public class Num implements Comparable<Num> {
 	/**
 	 * Shifts digits of Number a with d digits to give a Number 
 	 * equivalent to a with 'd' zeros behind.
-	 * 
 	 * @param a The number to be shifted
 	 * @param d the number of zeros to be appended
 	 * @return the output Num = a * 10^d
@@ -697,14 +691,16 @@ public class Num implements Comparable<Num> {
 		if (n == 0) return new Num(1); // a^0 = 1
 
 		if (n == 1) return a; // a^1
+		
+		Num halfPower = simplePower(a, n/2); // saving (4 - 1) recursive calls
 
 		// When n is Positive and EVEN
 		if (n % 2 == 0)
-			return product(power(a, n/2), simplePower(a, n/2));
+			return product(halfPower, halfPower);
 
 		// When n is Positive and ODD
 		else
-			return product(a, product(simplePower(a, n/2), simplePower(a, n/2)));
+			return product(a, product(halfPower, halfPower));
 	}
 	
 	/**
@@ -886,15 +882,9 @@ public class Num implements Comparable<Num> {
 		return mid;
 	}
 
-	
-	// UTILITY FUNCTIONS
-
 	/**
-	 * Compare "this" to "other": return +1 if this is greater, 
-	 * 0 if equal, -1 otherwise. 
-	 * NOTE: Compares ONLY Magnitude of each number, 
-	 * NOT according to the sign.
-	 * 
+	 * Compare "this" to "other": return +1 if this is greater, 0 if equal, -1 otherwise. 
+	 * NOTE: Compares ONLY Magnitude of each number, NOT according to the sign.
 	 * @param other the other number
 	 */
 	public int compareTo(Num other) {
@@ -924,9 +914,11 @@ public class Num implements Comparable<Num> {
 		return 0;
 	}
 
-	// Output using the format "base: elements of list ..."
-	// For example, if base=100, and the number stored corresponds to -10965,
-	// then the output is "100: - [65, 9, 1]"
+	/**
+	 * Output using the format "base: elements of list" 
+	 * For example, if base = 100, and the number stored corresponds to -10965, 
+	 * then the output is "100: - [65, 9, 1]"
+	 */
 	public void printList() {
 		System.out.print(base()+": ");
 		
@@ -940,7 +932,6 @@ public class Num implements Comparable<Num> {
 		}
 		System.out.print("]");
 		System.out.println();
-		//System.out.println(Arrays.toString(arr));
 	}
 
 	/**
@@ -989,7 +980,7 @@ public class Num implements Comparable<Num> {
 		return base;
 	}
 	
-	// Return number equal to "this" number, in base=newBase
+	// Return number equal to "this" number, in base = newBase
 	public Num convertBase(int newBase) {
 		Num nB = new Num(newBase);
 		Num zero = new Num(0);
@@ -1065,7 +1056,8 @@ public class Num implements Comparable<Num> {
 		Num two = new Num(2);
 		Num zero = new Num(0);
 		
-		if (this.compareTo(two) < 0) return zero;  
+		if (this.compareTo(two) < 0) 
+			return zero;  
 		
 		// When the most significant digit = 1, the half.len = this.len - 1
 		if (this.arr[len - 1] == 1) {
@@ -1327,10 +1319,7 @@ public class Num implements Comparable<Num> {
 		//String[] strIn = {"2","+","3","*","(","4","*","5","+","3",")","^","2","-","1"};
 		//String[] strIn = {"(","-45","/","9",")","^","(","31","%","4",")","-","(","12","*","(","2","+","2","^","3",")",")"};
 		String[] strIn = {"(", "(", "98765432109876543210987654321", "+", "5432109876543210987654321", "*", "345678901234567890123456789012", ")", "*", "246801357924680135792468013579", "+", "12345678910111213141516171819202122", "*", "(", "191817161514131211109876543210", "-", "13579", "*", "24680", ")", ")", "*", "7896543", "+", "157984320"};
-		
-		//String[] strIn = {"(", "(", "9", "+", "5", "*", "3", ")", "*", "2", "+", "1", "*", "(", "1", "-", "1", "*", "2", ")", ")", "*", "7", "+", "1"};
-				
-		
+		//String[] strIn = {"(", "(", "9", "+", "5", "*", "3", ")", "*", "2", "+", "1", "*", "(", "1", "-", "1", "*", "2", ")", ")", "*", "7", "+", "1"};		
 		//String str[] = {"9","^","4","-","8","^","9","%","100","+","(","-590",")","*","8","/","25","-","(","9","/","10","/","10","/","10",")"};
 		Num inFix = Num.evaluateInfix(strIn);
 		System.out.println("Infix evaluation: \t"+ inFix);
@@ -1345,5 +1334,4 @@ public class Num implements Comparable<Num> {
 		//test.printList();
 		//System.out.println(test.convertBase(9223));
 	}
-
 }
