@@ -1335,6 +1335,6 @@ public class Num implements Comparable<Num> {
 	/**
 	 * TODO:
 	 * 1. Create a function with if else ... blocks returning appropriate precedence for an operator. Instead of using HashMap. 
-	 * 2. Write Tester file with the help from Yash with test cases for each operations/ methods.
+	 * 2. Write Tester file with the help from @Yash with test cases for each operations/ methods.
 	 */
 }

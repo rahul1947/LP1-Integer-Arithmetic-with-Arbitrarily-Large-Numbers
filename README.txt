@@ -1,14 +1,15 @@
-/**
- * CS 5V81.001. Implementation of data structures and algorithms 
- * Long Project LP1: Integer arithmetic with arbitrarily large numbers
- * 
- * @author Rahul Nalawade (rsn170330)
- * @author Arpita Agrawal (aua170030)
- * @author Simran Rawlani (sxr174130)
- * @author Yash Madane (yxm172130)
- *
- * Date: Sunday, September 23, 2018
- */
+# Long Project LP1: Integer Arithmetic with Arbitrarily Large Numbers
+ 
+# Authors:
+ * Rahul Nalawade (rsn170330)
+ * Dhwani Raval (dsr170230)
+ * Varun Parashar (vxp171830)
+ * Arpita Agrawal (aua170030)
+ * Simran Rawlani (sxr174130)
+ * Yash Madane (yxm172130)
+ 
+ # End Date:
+ * Sunday, September 23, 2018
 __________________________________________________________________________________
 
 # Project Description
