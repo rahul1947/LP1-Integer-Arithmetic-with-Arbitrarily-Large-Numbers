@@ -1,6 +1,6 @@
 package rsn170330.lp1;
 
-/* Test program for LP1.  Change package to your net id.
+/* Test program for LP1.
    Usage:  There are 7 tests:
 	java -Xss512m -Xms2g TestLP1 0
 	java -Xss512m -Xms2g TestLP1 1

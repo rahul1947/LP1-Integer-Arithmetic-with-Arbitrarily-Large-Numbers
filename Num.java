@@ -4,6 +4,8 @@ package rsn170330.lp1;
  * CS 5V81.001. Implementation of data structures and algorithms 
  * Long Project LP1: Integer arithmetic with arbitrarily large numbers
  * @author Rahul Nalawade (rsn170330)
+ * @author Dhwani Raval (dsr170230)
+ * @author Varun Parashar (vxp171830)
  * @author Arpita Agrawal (aua170030)
  * @author Simran Rawlani (sxr174130)
  * @author Yash Madane (yxm172130)
@@ -1332,9 +1334,12 @@ public class Num implements Comparable<Num> {
 		//test.printList();
 		//System.out.println(test.convertBase(9223));
 	}
-	/**
-	 * TODO:
-	 * 1. Create a function with if else ... blocks returning appropriate precedence for an operator. Instead of using HashMap. 
-	 * 2. Write Tester file with the help from @Yash with test cases for each operations/ methods.
-	 */
 }
+/**
+ * Future Work:
+ * 1. evelauteInfix() - Create a function with if else ... blocks returning 
+ *    appropriate precedence for an operator. Instead of using HashMap. 
+ * 
+ * 2. Write Tester file with the help from @Yash with test cases for each 
+ *    operations/ methods.
+ */
