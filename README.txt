@@ -30,8 +30,8 @@ structure for representing Num:
    list stores exactly one long integer. 
 
    The base is defined to be 10 in the starter code, but you may modify it. 
-   In the discussions below, we will use base = 10. For base = 10, the number 
-   4028 is represented by the list: {8,2,0,4}. 
+   For base = 10, the number 30128 is represented by the list: {8,2,1,0,3}.
+   For base = 100, the number 30128 is represented by the list: {28,1,3}. 
 
 Implement all methods in the starter code. 
 
