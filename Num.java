@@ -458,7 +458,7 @@ public class Num implements Comparable<Num> {
 			}
 		}
 
-		// Karatsuba Algorithm: Fast Integer Multiplication
+		// Karatsuba Algorithm: Fast Integer Multiplication, RT = 0(n^log2 (3)) 
 		else {
 			// a1, b1 being GREATER sub-halves and a2, b2 being LOWER sub-halves
 			Num a1 = new Num();
@@ -528,6 +528,22 @@ public class Num implements Comparable<Num> {
 		// Whooosh! thats the correct product :)
 		return out;
 	}
+	/**
+	 * NOTE: 
+	 * 1. Though Karatsuba Algorithm RT = 0(n^log 3) sounds great, but it's implementation is 
+	 * complicated, as you can see. The divide-and-conquer has a big recursive-overhead when 
+	 * the numbers are not of equal length, as we create additional terms and more crossover 
+	 * points, and only behaves better when numbers are of equal length.
+	 *  
+	 * 2. The O(n^2) is simple and straight-forward. Karatsuba can perform faster than O(n^2) when 
+	 * the Num has 10000 digits (arr.length = 10000) or more, which is equivalent to having a number 
+	 * of decimal length = 10^(9 * 10000).  
+	 * 
+	 * 3. It is done for personal satisfaction. If you are aiming for efficiency, you may keep 
+	 * the implementation simple with O(n^2) algorithm.
+	 * 
+	 * 4. Thus, a complicated 0(n^log 3) doesn't necessarily beat O(n^2) algorithm. 
+	 */
 
 	/**
 	 * Karatsuba Algorithm Helper method: 
