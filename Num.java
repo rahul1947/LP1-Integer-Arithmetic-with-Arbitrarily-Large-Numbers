@@ -1,5 +1,4 @@
 package rsn170330.lp1;
-
 /**
  * CS 5V81.001. Implementation of data structures and algorithms 
  * Long Project LP1: Integer arithmetic with arbitrarily large numbers
@@ -188,6 +187,33 @@ public class Num implements Comparable<Num> {
 			}
 		}
 		return out;
+	}
+	
+	/**
+	 * 
+	 * @param a the input number
+	 * @param b the input number
+	 * @return true if a < b
+	 */
+	public static boolean isSmallerThan(Num a, Num b) {
+		Num erg = Num.subtract(b, a);
+		if (erg.toString().charAt(0) == '-') {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * @param from 12
+	 * @return 479001600
+	 */
+	public static Num faculty(Num from) {
+		  Num nr = new Num("1");
+		  for (Num i = new Num("2"); Num.isSmallerThan(i, from); i = Num.add(i, new Num(1))) {
+		      nr = Num.product(nr, i);
+		  }
+		  return nr;
 	}
 
 	/**
@@ -1231,6 +1257,7 @@ public class Num implements Comparable<Num> {
 	 * Perform the required Arithmetic operations s1-operator-s2
 	 * And operator must be binary, like +,-,*,/,%,^ 
 	 */
+	@SuppressWarnings("removal")
 	private Num evaluate(String s1, String s2, String operator) {
 
 		Num result = null, num1 = null, num2 = null;
